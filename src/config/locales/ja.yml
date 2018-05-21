@@ -1,0 +1,43 @@
+ja:
+  activerecord:
+    models:
+      todo: ToDo
+    attributes:
+      todo:
+        title: Todo名
+        limited_at: 期限
+  todos: ToDoList
+  search: 検索
+  edit: 編集
+  helpers:
+    submit:
+      create: 登録
+      edit: 編集
+      update: 更新
+      search: 検索
+    label:
+      todo:
+        title: Todo名
+        limited_at: 期限
+  warning:
+    nothing: データが存在しません
+  page:
+    todo:
+      index:
+        form: ToDoを追加します
+      search:
+        form: ToDoを検索します
+      edit:
+        form: ToDoを編集します
+  todo:
+    id: ID
+    title: Todo名
+    limited_at: 期限
+    status: 状態
+    created_at: 作成日
+    updated_at: 更新日
+  enums:
+    todo:
+      status:
+        incomp: 未完了
+        comp: 完了
