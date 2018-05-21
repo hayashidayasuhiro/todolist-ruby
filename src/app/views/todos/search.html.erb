@@ -1,0 +1,58 @@
+<h1><%= t(controller_name) %></h1>
+
+<div class="card mb-3">
+  <div class="card-body">
+    <h5 class="card-title"><%= t('page.todo.search.form') %></h5>
+    <%= form_tag({ action: :search }, { method: 'post' }) do %>
+      <div class="form-group row">
+        <div class="col-sm-2">
+          <label for="form_title" class="col-form-label"><%= t('todo.title') %></label>
+        </div>
+        <div class="col-sm-5">
+          <input type="text" name="title" id="form_title" class="form-control" value="<%= params[:title] %>">
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-sm-10 col-sm-offset-2">
+          <button type="submit" class="btn btn-primary"><%= t('helpers.submit.search') %></button>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<% if @todos.count == 0 %>
+<div class="alert alert-warning">
+  <%= t('warning.nothing') %>
+</div>
+<% else %>
+<table class="table">
+  <thead class="thead-light">
+    <tr>
+      <th><%= t('todo.id') %></th>
+      <th><%= t('todo.title') %></th>
+      <th><%= t('todo.limited_at') %></th>
+      <th><%= t('todo.created_at') %></th>
+      <th><%= t('todo.status') %></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @todos.each do |todo| %>
+    <tr>
+      <td><%= todo.id %></td>
+      <td><%= todo.title %></td>
+      <td><%= todo.limited_at %></td>
+      <td><%= todo.created_at %></td>
+      <td>
+        <% if todo.incomp? %>
+        <%= button_tag todo.status_i18n, :data => { :id => todo.id }, :class => 'btn btn-danger js-status' %>
+        <% else %>
+        <%= button_tag todo.status_i18n, :data => { :id => todo.id }, :class => 'btn btn-success js-status' %>
+        <% end %>
+      </td>
+      <td><%= link_to t('helpers.submit.edit'), { :controller => 'todos', :action => 'edit', :id => todo.id }, { :class => 'btn btn-warning' } %></td>
+    </tr>
+    <% end %>
+</table>
+<% end %>

@@ -15,6 +15,7 @@ RUN apk update && \
         libxml2-dev \
         libxslt-dev \
         mysql-dev
+#    apk --no-cache add mysql-client mysql-dev nodejs tzdata && \
 #    apk --no-cache add --virtual build-dependencies \
 #        build-base \
 #        libxml2-dev \

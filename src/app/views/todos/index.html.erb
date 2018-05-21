@@ -1,0 +1,69 @@
+<h1><%= t(controller_name) %></h1>
+
+<%= render :partial => "shared/error", :collection => @new_todo.errors.full_messages if @new_todo.errors.any? %>
+
+<div class="card mb-3">
+  <div class="card-body">
+    <h5 class="card-title"><%= t('page.todo.index.form') %></h5>
+    <%= form_for @new_todo, :url => { :action => :add }, :html => { :method => 'post' } do |f| %>
+      <div class="form-group row">
+        <div class="col-sm-2">
+          <%= f.label :title, :class => 'col-form-label' %>
+        </div>
+        <div class="col-sm-5">
+          <%= f.text_field :title, :class => 'form-control' %>
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-sm-2">
+          <%= f.label :limited_at, :class => 'col-form-label' %>
+        </div>
+        <div class="col-sm-5">
+          <%= f.date_field :limited_at, :class => 'form-control' %>
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-sm-10 col-sm-offset-2">
+          <%= f.submit :class => 'btn btn-primary' %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<% if @todos.count == 0 %>
+<div class="alert alert-warning">
+  <%= t('warning.nothing') %>
+</div>
+<% else %>
+<table class="table todos">
+  <thead class="thead-light">
+    <tr>
+      <th><%= t('todo.id') %></th>
+      <th><%= t('todo.title') %></th>
+      <th><%= t('todo.limited_at') %></th>
+      <th><%= t('todo.created_at') %></th>
+      <th><%= t('todo.status') %></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @todos.each do |todo| %>
+    <tr>
+      <td><%= todo.id %></td>
+      <td><%= todo.title %></td>
+      <td><%= todo.limited_at %></td>
+      <td><%= todo.created_at %></td>
+      <td>
+        <% if todo.incomp? %>
+        <%= button_tag todo.status_i18n, :data => { :id => todo.id }, :class => 'btn btn-danger js-status' %>
+        <% else %>
+        <%= button_tag todo.status_i18n, :data => { :id => todo.id }, :class => 'btn btn-success js-status' %>
+        <% end %>
+      </td>
+      <td><%= link_to t('helpers.submit.edit'), { :controller => 'todos', :action => 'edit', :id => todo.id }, { :class => 'btn btn-warning' } %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+<% end %>
